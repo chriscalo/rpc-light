@@ -19,8 +19,8 @@ to handle RPCs.
 Example:
 
 ``` js
-const express = require("express");
 const { rpcService } = require("rpc-light/server.js");
+const express = require("express");
 
 const app = express();
 
@@ -73,8 +73,8 @@ which point it delegates to a handler function that you provide.
 Example:
 
 ``` js
-import axios from "axios"; // optional, use any transport you like
 import { createService } from "rpc-light/client.js";
+import axios from "axios"; // optional, use any transport you like
 
 // (1) We first call `createService()`, providing a `callHandler` (see below).
 const service = createService(callHandler);
