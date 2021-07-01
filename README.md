@@ -92,18 +92,18 @@ service.greetingService.greet; //=> path = ["greetingService", "greet"]
 const response = await service.greetingService.greet("World", true);
 console.log(response); //=> { message: "Hello, World!" }
 
-// (4) Finally, the provided `callHandler()` is invoked with:
+// (4) The provided `callHandler()` is invoked with:
 //  - `this` set to the proxy object (which contains the sequence of properties
 //    accessed on its `path` key)
 //  - all arguments passed as function parameters
 async function callHandler(...args) {
   const { path } = this;
   const payload = { path, args };
-  // (5) issue server call here via fetch(), axios(), etc. The way `rpc-light`'s
-  // server expects the call to be made is as follows, but if you want to use
-  // your own custom server logic, you can do anything you want here. (And the
-  // endpoint can be anything you configure on your server, it doesn't need to
-  // be `/rpc` to work with `rpc-light`'s server.)
+  // (5) Finally, you issue server call here via fetch(), axios(), etc. The way
+  // `rpc-light`'s server expects the call to be made is as follows, but if you
+  // want to use your own custom server logic, you can do anything you want
+  // here. (And the endpoint can be anything you configure on your server, it
+  // doesn't need to be `/rpc` to work with `rpc-light`'s server.)
   return await axios.post("/rpc", payload).then(res => res.data);
 }
 ```
