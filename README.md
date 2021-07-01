@@ -23,7 +23,7 @@ to a handler function that you provide.
 Example:
 
 ``` js
-import axios from "axios";
+import axios from "axios"; // optional, use any transport you like
 import { createService } from "rpc-light/client.js";
 
 // (1) We first call `createService()`, providing a `callHandler` (see below).
