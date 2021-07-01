@@ -86,6 +86,16 @@ class RpcProxyHandler {
   
 }
 
+// TODO: we should provide a default handler that POSTs RPC calls to a server at
+// some provided URL or path
+// async function defaultRpcHandler(endpoint = "/rpc") {
+//   const { path } = this;
+//   const payload = { path, args };
+//   return await axios.post(endpoint, payload).then(res => res.data);
+// }
+
+
 module.exports = {
   createService,
+  // defaultRpcHandler,
 };
