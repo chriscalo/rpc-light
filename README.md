@@ -41,7 +41,7 @@ const response = await service.foo.bar.baz({ name: "World" }, "!");
 
 // (4) Finally, the provided `callHandler()` is invoked with:
 //  - `this` set to the proxy object (which contains the sequence of properties
-//    accessed on it `path` key)
+//    accessed on its `path` key)
 //  - all arguments passed as function parameters
 async function callHandler(...args) {
   const { path } = this;
