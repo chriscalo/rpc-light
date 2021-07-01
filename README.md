@@ -9,6 +9,56 @@ yarn add rpc-light
 npm install rpc-light
 ```
 
+## Node.js RPC Server
+
+The RPC server requires minimal setup. The `rpcService()` function accepts an
+object of sync or async methods you want to expose to the client and returns an
+`express` handler function. Compose this with your Express server and start it
+to handle RPCs.
+
+Example:
+
+``` js
+const express = require("express");
+const { rpcService } = require("rpc-light/server.js");
+
+const app = express();
+
+// These are methods you want to expose to the client. This structure can have
+// arbitrarily deep nesting.
+const exposedMethods = {
+  greetingService: {
+    greet(name, exclaim = false) {
+      const punctuation = exclaim ? "!": "."
+      const message = `Hello, ${name}` + punctuation;
+      return {
+        message,
+      };
+    },
+  },
+};
+
+// choose any URL path you would like, just make sure your client sends requests
+// to that URL
+app.use("/rpc", rpcService(exposedMethods));
+
+app.listen(8080);
+```
+
+It's now possible to invoke `greetingService.greet("World", true)` via a `POST`
+request to the URL `/rpc` passing a JSON object with `path` and `args` keys:
+
+```
+POST /rpc
+{
+  "path": ["greetingService", "greet"],
+  "args": ["World", true]
+}
+```
+
+Next, we'll use the included RPC client to do just this.
+
+
 ## Proxy-based RPC Client
 
 The proxy-based RPC client is intended for use in the browser, but doesn't rely
@@ -33,13 +83,13 @@ const service = createService(callHandler);
 // on the service. As we access a deeper property chain, the service tracks this
 // path. This has no effect before we invoke a function call on one of these
 // properties.
-service.foo.bar.baz; //=> path = ["foo", "bar", "baz"]
+service.greetingService.greet; //=> path = ["greetingService", "greet"]
 
 // (3) Whenever we invoke a function call, the `callHandler` provided to
 // `createService()` is called with the provided arguments. Note that because
 // this is remote communication, all function calls return a promise that must
 // be `await`-ed or `then()`-ed.
-const response = await service.foo.bar.baz({ name: "World" }, "!");
+const response = await service.greetingService.greet("World", true);
 
 // (4) Finally, the provided `callHandler()` is invoked with:
 //  - `this` set to the proxy object (which contains the sequence of properties
@@ -57,6 +107,3 @@ async function callHandler(...args) {
 }
 ```
 
-## Node.js RPC Server
-
-COMING SOON
