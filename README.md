@@ -17,8 +17,8 @@ any of its methods and doesn't require type definitions of any kind such as
 protocol buffers.
 
 Instead, this proxy-based RPC client tracks the names of properties accessed as
-a `path` variable until a function call is invoked, at which point it delegates
-to a handler function that you provide.
+a `path` variable until we invoke one of these properties as a function, at
+which point it delegates to a handler function that you provide.
 
 Example:
 
