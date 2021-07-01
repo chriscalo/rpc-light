@@ -12,7 +12,7 @@ npm install rpc-light
 ## Proxy-based RPC Client
 
 The proxy-based RPC client is intended for use in the browser, but doesn't rely
-on any browser-specific APIs. It Has no embedded knowledge of the RPC server or
+on any browser-specific APIs. It has no embedded knowledge of the RPC server or
 any of its methods and doesn't require type definitions of any kind such as
 protocol buffers.
 
