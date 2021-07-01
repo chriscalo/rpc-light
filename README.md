@@ -36,7 +36,9 @@ const service = createService(callHandler);
 service.foo.bar.baz; //=> path = ["foo", "bar", "baz"]
 
 // (3) Whenever we invoke a function call, the `callHandler` provided to
-// `createService()` is called with the provided arguments.
+// `createService()` is called with the provided arguments. Note that because
+// this is remote communication, all function calls return a promise that must
+// be `await`-ed or `then()`-ed.
 const response = await service.foo.bar.baz({ name: "World" }, "!");
 
 // (4) Finally, the provided `callHandler()` is invoked with:
