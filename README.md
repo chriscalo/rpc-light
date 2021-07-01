@@ -35,8 +35,8 @@ const service = createService(callHandler);
 // properties.
 service.foo.bar.baz; //=> path = ["foo", "bar", "baz"]
 
-// (3) Whenever we invoke a function call, the provided `callHandler` is called
-// with the provided arguments.
+// (3) Whenever we invoke a function call, the `callHandler` provided to
+// `createService()` is called with the provided arguments.
 const response = await service.foo.bar.baz({ name: "World" }, "!");
 
 // (4) Finally, the provided `callHandler()` is invoked with:
