@@ -1,5 +1,5 @@
 const test = require("ava");
-const { createService } = require("./rpc-client.js");
+const { createService } = require("./client.js");
 
 test("createService() returns an object", async t => {
   const service = createService(function noop() {});
@@ -13,16 +13,25 @@ test("descendant properties of a service return functions", async t => {
   t.is(typeof service.foo.bar.baz, "function");
 });
 
-test("function call: receives path & args, returns value", async t => {
-  const service = createService(function (...args) {
-    t.deepEqual(this.path, ["foo", "bar"]);
-    const [ person, year ] = args;
-    t.deepEqual(args[0], { name: "Chris" });
-    t.deepEqual(args[1], 1981);
-    const age = new Date().getFullYear() - year;
-    return `Hello, ${person.name}! You turn ${age} this year!`;
-  });
+test("function call: receives path & args", async t => {
+  const service = createService(callHandler);
+  await service.foo.bar({ name: "World" }, "!");
   
-  const response = await service.foo.bar({ name: "Chris" }, 1981);
-  t.is(response, "Hello, Chris! You turn 40 this year!");
+  function callHandler(...args) {
+    t.deepEqual(this.path, ["foo", "bar"]);
+    const [ details, punctuation ] = args;
+    t.deepEqual(details, { name: "World" });
+    t.deepEqual(punctuation, "!");
+  }
+});
+
+test("function call: returns value", async t => {
+  const service = createService(callHandler);
+  const response = await service.foo.bar({ name: "World" }, "!");
+  t.is(response, "Hello, World!");
+  
+  function callHandler(...args) {
+    const [ details, punctuation ] = args;
+    return `Hello, ${details.name}${punctuation}`;
+  }
 });

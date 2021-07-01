@@ -1,17 +1,11 @@
-// consider smaller replacements:
-// - https://www.npmjs.com/package/get-value
-// - https://www.npmjs.com/package/object-path-get
 const express = require("express");
 const bodyParser = require("body-parser");
 const R = require("ramda");
-const { schema, items, is } = require("~/util/schema");
 
+// put path in the URL? 🤔
+// handle OPTIONS request at the root? 🤔
+// handle only POST requests? 🤔
 function rpcService(exposedMethods) {
-  
-  // put path in the URL? 🤔
-  // handle OPTIONS request at the root? 🤔
-  // handle only POST requests? 🤔
-  
   const service = express();
   
   service.use(bodyParser.json());
@@ -60,7 +54,20 @@ module.exports = {
   rpcService,
 };
 
-const ArrayOfStringsSchema = schema(
-  is(Array),
-  items(is(String)),
-);
+const ArrayOfStringsSchema = {
+  test(value) {
+    if (!Array.isArray(value)) {
+      return false;
+    }
+    
+    if (!value.every(isString)) {
+      return false;
+    }
+    
+    return true;
+  },
+};
+
+function isString(value) {
+  return typeof value === "string";
+}
