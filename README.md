@@ -108,3 +108,6 @@ async function callHandler(...args) {
 }
 ```
 
+## Credits
+
+Inspired by [`wildcard-api`](https://www.npmjs.com/package/wildcard-api)
