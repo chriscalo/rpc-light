@@ -1,5 +1,5 @@
 # rpc-light
-A lightweight RPC library for the browser and Node.js
+A lightweight RPC library for Node.js and the browser
 
 ## Installation
 
