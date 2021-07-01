@@ -1,11 +1,9 @@
 {
   "name": "rpc-light",
-  "scripts": {
-    "start": "node server.js"
-  },
-  "description": "A lightweight RPC library for the browser and Node.js",
   "version": "0.1.0",
-  "main": "index.js",
+  "description": "A lightweight RPC library for the browser and Node.js",
+  "client": "client.js",
+  "server": "server.js",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/chriscalo/rpc-light.git"
@@ -20,5 +18,8 @@
   "bugs": {
     "url": "https://github.com/chriscalo/rpc-light/issues"
   },
-  "homepage": "https://github.com/chriscalo/rpc-light#readme"
+  "homepage": "https://github.com/chriscalo/rpc-light#readme",
+  "devDependencies": {
+    "ava": "^3.15.0"
+  }
 }
