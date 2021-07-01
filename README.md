@@ -90,6 +90,7 @@ service.greetingService.greet; //=> path = ["greetingService", "greet"]
 // this is remote communication, all function calls return a promise that must
 // be `await`-ed or `then()`-ed.
 const response = await service.greetingService.greet("World", true);
+console.log(response); //=> { message: "Hello, World!" }
 
 // (4) Finally, the provided `callHandler()` is invoked with:
 //  - `this` set to the proxy object (which contains the sequence of properties
