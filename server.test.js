@@ -1,41 +1,42 @@
-const test = require("ava");
+const { test } = require("node:test");
+const assert = require("node:assert/strict");
 const request = require("supertest");
 const { rpcService } = require("./server.js");
 
-test("exports a function", t => {
-  t.is(typeof rpcService, "function");
+test("exports a function", () => {
+  assert.strictEqual(typeof rpcService, "function");
 });
 
-test("calling rpcService returns an express handler function", t => {
+test("calling rpcService returns an express handler function", () => {
   const handler = rpcService({
     foo() {},
   });
-  t.is(typeof handler, "function");
+  assert.strictEqual(typeof handler, "function");
 });
 
-test("handler calls method with args, returns result as JSON", async t => {
-  t.plan(4);
-  
+test("handler calls method with args, returns result as JSON", async () => {
+  let greetCallCount = 0;
+
   const methods = {
     greet(name, exclaim = false) {
-      t.is(name, "World");
-      const punctuation = exclaim ? "!": "."
+      greetCallCount++;
+      assert.strictEqual(name, "World");
+      const punctuation = exclaim ? "!" : ".";
       const message = `Hello, ${name}` + punctuation;
       return {
         message,
       };
     },
   };
-  
+
   const handler = rpcService(methods);
   const res = await request(handler).post("/").send({
     path: ["greet"],
     args: ["World", true],
   });
-  
-  t.is(res.ok, true);
-  t.is(res.type, "application/json");
-  t.like(res.body, {
-    message: "Hello, World!",
-  });
+
+  assert.strictEqual(greetCallCount, 1);
+  assert.ok(res.ok);
+  assert.strictEqual(res.type, "application/json");
+  assert.strictEqual(res.body.message, "Hello, World!");
 });
