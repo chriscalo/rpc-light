@@ -5,8 +5,8 @@
   "client": "client.js",
   "server": "server.js",
   "scripts": {
-    "test": "yarn ava --verbose",
-    "test:watch": "yarn ava --verbose --watch"
+    "test": "ava --verbose",
+    "test:watch": "ava --verbose --watch"
   },
   "repository": {
     "type": "git",
